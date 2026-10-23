@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fases de la Luna</title>
+<style>
+:root{color-scheme:dark;--ink:#f5f7ff;--muted:#c2c2c2;--blue:#bdbdbd}
+*{box-sizing:border-box}body{margin:0;padding:22px;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:#000}
+main{max-width:1000px;margin:auto}h1{text-align:center;font-size:clamp(1.8rem,4vw,2.7rem);margin:4px 0 8px}.intro{text-align:center;color:var(--muted);line-height:1.5;margin:0 auto 22px;max-width:720px}
+.layout{display:grid;grid-template-columns:1fr 1fr;gap:18px}.panel{padding:clamp(17px,3vw,26px);border:1px solid #77777755;border-radius:20px;background:#171717e8;box-shadow:0 14px 40px #0003}
+.sky{min-height:330px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden}.sky:before{content:"";position:absolute;width:3px;height:3px;background:#e8efff;border-radius:50%;box-shadow:70px -70px #e8efff,-95px -40px #e8efff,120px 35px #e8efff,-135px 75px #e8efff,45px 100px #e8efff,-35px -110px #e8efff,155px -35px #e8efff,-160px -12px #e8efff}
+.moon{z-index:1;width:min(62%,220px);aspect-ratio:1;filter:drop-shadow(0 0 20px #d5e4ff25)}.moon svg{width:100%;height:100%;display:block}.phase-name{z-index:1;font-size:1.35rem;font-weight:bold;text-align:center;margin-top:12px}.day-label{z-index:1;color:var(--muted);margin-top:6px}
+h2{font-size:1.4rem;color:#d0d0d0;margin:0 0 12px}#infoText{font-size:1.05rem;line-height:1.65;min-height:105px;margin:0}
+.row{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:.9rem;margin-top:22px}input[type=range]{width:100%;accent-color:var(--blue);margin:18px 0 9px;cursor:pointer}.scale{display:flex;justify-content:space-between;gap:5px;color:#b8b8b8;font-size:.72rem}
+.buttons{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}button{flex:1 1 105px;min-height:42px;border:1px solid #777777;border-radius:12px;background:#303030;color:var(--ink);font-weight:600;padding:9px;cursor:pointer}button:hover{background:#484848}button.active{background:#d5d5d5;color:#171717;border-color:#d5d5d5}.cycle{text-align:center;color:var(--muted);font-size:.9rem;margin-top:16px}
+@media(max-width:700px){body{padding:13px}.layout{grid-template-columns:1fr}.sky{min-height:275px}.moon{width:min(54%,190px)}#infoText{min-height:0}}
+
+.orbit-panel{margin:0 0 18px;padding:20px clamp(12px,3vw,28px);border:1px solid #77777755;border-radius:20px;background:linear-gradient(145deg,#101010,#1b1b1b 58%,#111);box-shadow:0 14px 40px #0004}
+.orbit-caption{text-align:center;color:#d0d0d0;font-size:1.05rem;margin:0 0 8px}
+.orbit-diagram{display:block;width:100%;height:auto;max-height:360px}
+.orbit-diagram text{font:600 15px Arial,Helvetica,sans-serif;fill:#dedede}
+.orbit-diagram .visible-label{font-size:13px;fill:#c8c8c8}
+.orbit-diagram .legend{font-size:20px;fill:#e2e2e2}
+@media(max-width:600px){.orbit-panel{padding:14px 8px}.orbit-diagram text{font-size:18px}.orbit-diagram .legend{font-size:21px}}
+
+</style>
+</head>
+<body>
+<main>
+<h1>Las fases de la Luna</h1>
+<p class="intro">Mueve la pelotita por la línea para recorrer el ciclo lunar y descubrir qué ocurre en cada fase.</p>
+
+<section class="orbit-panel" aria-label="Diagrama del recorrido de la Luna">
+  <p class="orbit-caption">Así se mueve la Luna alrededor de la Tierra</p>
+  <svg class="orbit-diagram" viewBox="0 0 760 330" role="img" aria-label="El Sol ilumina la Tierra y la Luna recorre su órbita">
+    <defs>
+      <radialGradient id="sunGlow"><stop stop-color="#fffde0"/><stop offset=".58" stop-color="#ffe45c"/><stop offset=".86" stop-color="#ffc928"/><stop offset="1" stop-color="#f59e0b"/></radialGradient>
+      <radialGradient id="earthGlow" cx="30%" cy="25%"><stop stop-color="#8de4ff"/><stop offset=".35" stop-color="#248bd7"/><stop offset=".75" stop-color="#1262a6"/><stop offset="1" stop-color="#07365e"/></radialGradient>
+      <radialGradient id="smallMoon"><stop stop-color="#fff"/><stop offset=".8" stop-color="#d7d7d7"/><stop offset="1" stop-color="#999"/></radialGradient>
+      <marker id="arrow" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="none" stroke="#bcbcbc" stroke-width="1.5"/></marker>
+    </defs>
+    <text x="112" y="42" text-anchor="middle">SOL</text>
+    <text x="380" y="42" text-anchor="middle">TIERRA</text>
+    <text x="608" y="42" text-anchor="middle">VISTA DESDE LA TIERRA</text>
+    <circle cx="112" cy="168" r="48" fill="#ffd84a" opacity=".16"/>
+    <circle cx="112" cy="168" r="31" fill="url(#sunGlow)"/>
+    <path d="M164 168 H248" stroke="#c8c8c8" stroke-width="3" marker-end="url(#arrow)"/>
+    <circle cx="380" cy="168" r="102" fill="none" stroke="#888" stroke-width="2" stroke-dasharray="5 8"/>
+    <path d="M405 69 A102 102 0 0 1 461 99" fill="none" stroke="#c2c2c2" stroke-width="2.5" stroke-dasharray="5 6" marker-end="url(#arrow)"/>
+    <circle cx="380" cy="168" r="30" fill="#56b9ed" opacity=".25"/><circle cx="380" cy="168" r="27" fill="url(#earthGlow)"/>
+    <path d="M365 151 q-10 9 -3 18 l9 5 2 12 10 5 6 -13 -7 -9 3 -11 -10 -8z" fill="#65b96e" stroke="#397c45" stroke-width=".8"/>
+    <path d="M389 148 q11 5 9 15 l-8 6 2 12 -10 7 -5 -11 4 -12z" fill="#79c96b" stroke="#397c45" stroke-width=".8"/>
+    <circle cx="482" cy="168" r="18" fill="#888" opacity=".22"/>
+    <circle cx="482" cy="168" r="13" fill="url(#smallMoon)"/>
+    <circle cx="608" cy="168" r="40" fill="#151515" stroke="#888" stroke-width="2"/>
+    <circle cx="608" cy="168" r="35" fill="#ececec"/>
+    <text x="608" y="220" text-anchor="middle" class="visible-label">Fase visible</text>
+    <text x="380" y="292" text-anchor="middle">ÓRBITA LUNAR</text>
+    <text x="190" y="315" text-anchor="middle" class="legend">☼ Luz solar</text>
+    <text x="520" y="315" text-anchor="middle" class="legend">● Recorrido de la Luna</text>
+  </svg>
+</section>
+
+<div class="layout">
+<section class="panel sky" aria-label="Representación de la fase lunar">
+<div class="moon"><svg viewBox="0 0 200 200" role="img" aria-label="Dibujo de la Luna">
+<defs><clipPath id="clip"><circle cx="100" cy="100" r="82"/></clipPath><radialGradient id="light" cx="32%" cy="28%" r="78%"><stop stop-color="#fff"/><stop offset=".7" stop-color="#e5eaf4"/><stop offset="1" stop-color="#aebbd0"/></radialGradient><radialGradient id="dark" cx="35%" cy="30%" r="90%"><stop stop-color="#25334a"/><stop offset="1" stop-color="#080f1d"/></radialGradient></defs>
+<g clip-path="url(#clip)"><circle cx="100" cy="100" r="82" fill="url(#dark)"/><path id="litShape" fill="url(#light)"/><g id="craters" fill="#9eabc0" opacity=".28"><circle cx="72" cy="70" r="10"/><circle cx="125" cy="58" r="6"/><circle cx="135" cy="112" r="12"/><circle cx="82" cy="132" r="7"/><circle cx="105" cy="91" r="4"/><circle cx="60" cy="105" r="4"/><circle cx="111" cy="151" r="5"/></g></g><circle cx="100" cy="100" r="82" fill="none" stroke="#dce7fa" stroke-opacity=".35" stroke-width="2"/>
+</svg></div>
+<div class="phase-name" id="phaseName">Luna nueva</div><div class="day-label" id="dayLabel">Día 0 del ciclo lunar</div>
+</section>
+<section class="panel">
+<h2 id="infoTitle">1. Luna nueva</h2><p id="infoText">La luna está entre la tierra y el sol, y la parte iluminada no se ve desde la tierra y por eso se ve oscura.</p>
+<div class="row"><label for="dayRange">Recorre el ciclo lunar</label><strong id="dayValue">0 días</strong></div>
+<input id="dayRange" type="range" min="0" max="29.5" step="0.1" value="0" aria-label="Día del ciclo lunar">
+<div class="scale"><span>Nueva</span><span>Creciente</span><span>Llena</span><span>Menguante</span><span>Nueva</span></div>
+<div class="buttons"><button type="button" data-phase="new">Luna nueva</button><button type="button" data-phase="crescent">Luna creciente</button><button type="button" data-phase="quarter">Cuarto creciente</button><button type="button" data-phase="full">Luna llena</button><button type="button" data-phase="last">Cuarto menguante</button></div>
+<div class="cycle">Un ciclo lunar dura aproximadamente 29,5 días.</div>
+</section>
+</div>
+</main>
+<script>
+(() => {
+const range=document.getElementById('dayRange'), dayValue=document.getElementById('dayValue'), dayLabel=document.getElementById('dayLabel'), phaseName=document.getElementById('phaseName'), infoTitle=document.getElementById('infoTitle'), infoText=document.getElementById('infoText'), litShape=document.getElementById('litShape'), buttons=[...document.querySelectorAll('[data-phase]')];
+const phases=[
+{key:'new',name:'Luna nueva',title:'1. Luna nueva',day:0,text:'La luna está entre la tierra y el sol, y la parte iluminada no se ve desde la tierra y por eso se ve oscura.'},
+{key:'crescent',name:'Luna creciente',title:'2. Luna creciente',day:3.7,text:'Se empieza a ver una pequeña parte de la luna iluminada.'},
+{key:'quarter',name:'Cuarto creciente',title:'3. Cuarto creciente',day:7.4,text:'Vemos la mitad de la luna iluminada desde la Tierra.'},
+{key:'full',name:'Luna llena',title:'4. Luna llena',day:14.8,text:'La luna se ve completamente iluminada desde la Tierra.'},
+{key:'last',name:'Cuarto menguante',title:'5. Cuarto menguante',day:22.1,text:'Se ve la mitad de la luna iluminada nuevamente, pero esta vez vemos el lado contrario al que vemos en cuarto creciente.'}
+];
+function phaseAt(d){if(d<1.85||d>=27.7)return phases[0];if(d<5.55)return phases[1];if(d<11.1)return phases[2];if(d<18.45)return phases[3];if(d<25.8)return phases[4];return phases[0]}
+function moonShape(key){
+if(key==='new')return '';
+if(key==='crescent')return 'M100 18 A82 82 0 0 1 100 182 A48 82 0 0 0 100 18 Z';
+if(key==='quarter')return 'M100 18 A82 82 0 0 1 100 182 L100 18 Z';
+if(key==='full')return 'M100 18 A82 82 0 1 1 99.9 18 Z';
+if(key==='last')return 'M100 18 A82 82 0 0 0 100 182 L100 18 Z';
+return '';
+}
+function update(){const d=Number(range.value),p=phaseAt(d);dayValue.textContent=d.toLocaleString('es-CL',{maximumFractionDigits:1})+(d===1?' día':' días');dayLabel.textContent='Día '+d.toLocaleString('es-CL',{maximumFractionDigits:1})+' del ciclo lunar';phaseName.textContent=p.name;infoTitle.textContent=p.title;infoText.textContent=p.text;litShape.setAttribute('d',moonShape(p.key));buttons.forEach(b=>{const active=b.dataset.phase===p.key;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))})}
+range.addEventListener('input',update);buttons.forEach(b=>b.addEventListener('click',()=>{const p=phases.find(x=>x.key===b.dataset.phase);range.value=p.day;update()}));update();
+})();
+</script>
+</body>
+</html>
